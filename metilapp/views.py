@@ -10,8 +10,8 @@ def main_page(request):
         form = MetilForm(request.POST, request.FILES)
         if form.is_valid():
             f = request.FILES['file']
-            handle_uploaded_file(f) 
-            delete_file(f)
+            #handle_uploaded_file(f) 
+            #delete_file(f)
             message = "Everything worked as intended"
             return render(request,'metilapp/result.html', {'message': message})
         else:
