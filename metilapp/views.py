@@ -11,7 +11,7 @@ def main_page(request):
         if form.is_valid():
             f=request.FILES['file']
             handle_uploaded_file(f)
-            data_gff = read_file_gff('metilapp/upload/'+f.name)
+            data_gff = read_file_gff('metilapp/'+f.name)
             delete_file(f)
             message = "Everything worked as intended"
             return render(request,'metilapp/result.html', {'message': message, 'data': data_gff[5]})

@@ -2,13 +2,13 @@ import os
 import csv
 
 def handle_uploaded_file(f):  
-    with open('./metilapp/upload/'+f.name, 'wb+') as destination:  
+    with open('./metilapp/'+f.name, 'wb+') as destination:  
         for chunk in f.chunks():  
             destination.write(chunk)
 
 def delete_file(f):
-    if os.path.exists('./metilapp/upload/'+f.name):
-        os.remove('metilapp/upload/'+f.name)
+    if os.path.exists('./metilapp/'+f.name):
+        os.remove('./metilapp/'+f.name)
     else:
         print(f+"does not exist")  
 
