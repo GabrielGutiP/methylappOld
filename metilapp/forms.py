@@ -1,6 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
-from metilapp.validators import validate_file_extension
+from .validators import validate_file_extension
 
 class MetilForm(forms.Form):
-     file = forms.FileField(validators=[validate_file_extension])
+     file = forms.FileField(label="SMRT Methylation Output (.gff)", validators=[validate_file_extension])
+     job_ID = forms.CharField(label="Job ID" , required=False)
