@@ -1,5 +1,5 @@
 from .forms import MetilForm
-from .functions import delete_file, handle_uploaded_file, read_file_gff
+from .functions import delete_file, handle_uploaded_file, methyl_type_stadistics, read_file_gff
 from django.shortcuts import render
 
 # Create your views here.
@@ -12,9 +12,9 @@ def main_page(request):
             f=request.FILES['file']
             handle_uploaded_file(f)
             data_gff = read_file_gff('metilapp/'+f.name)
+            base_sts = methyl_type_stadistics(data_gff)
             delete_file(f)
-            message = "Everything worked as intended"
-            return render(request,'metilapp/result.html', {'message': message, 'data': data_gff[5]})
+            return render(request,'metilapp/result.html', {'message': message, 'total_m': base_sts[0], 'chrom_m': base_sts[1], 'name_gff': f.name})
         else:
             message = form.errors
     form = MetilForm()
