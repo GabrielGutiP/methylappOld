@@ -3,7 +3,6 @@
         <h1>Welcome to MetilApp</h1>
     </head>
     <body>
-        <p>Please introduce your .gff file:</p>
         <form method="POST" class="post-form" enctype="multipart/form-data">  
             {% csrf_token %}  
             {{ form.as_p }}

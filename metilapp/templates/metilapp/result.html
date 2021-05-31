@@ -1,8 +1,55 @@
 <html>
     <head>
-        <h1>Results from:</h1>
+        <h1>Results from: {{jobID}}</h1>
     </head>
+{% block content %}
     <body>
         {{message}}
+        <br><br>
+        <h2>SMRT Methylation Output (.gff) Summary:</h2>
+        <table class="table table-striped">
+            {% for key, value in chrom_m %}
+            <thead>
+                <tr>
+                    <th>Chromosome</th>
+                    <td>{{key}}</td>
+                </tr>
+                <tr>
+                    <th>Methylation</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    {% for k, v in value %}
+                    <tr>
+                        <td>{{k}}</td>
+                        <td>{{v}}</td>
+                    </tr>
+                    {% endfor %}
+                </tr>
+            </tbody>
+            {% endfor %}
+        </table>
+        <br><br>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Methylation</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for key, value in total_m %}
+                <tr>
+                    <td>{{key}}</td>
+                    <td>{{value}}</td>
+                </tr>
+                {% endfor%}
+            </tbody>
+        </table>
+        <br><br>
+        <button><a href="/">Back</a></button>    
     </body>
+{% endblock %}
 </html>
