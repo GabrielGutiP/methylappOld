@@ -1,11 +1,12 @@
 <html>
     <head>
-        <h1>Results from: {{name_gff}}</h1>
+        <h1>Results from: {{jobID}}</h1>
     </head>
 {% block content %}
     <body>
         {{message}}
         <br><br>
+        <h2>SMRT Methylation Output (.gff) Summary:</h2>
         <table class="table table-striped">
             {% for key, value in chrom_m %}
             <thead>
