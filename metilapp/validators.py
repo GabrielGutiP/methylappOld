@@ -9,11 +9,11 @@ def validate_file_extension(value):
 
 def validate_pos_pat(value):
     if value <= 0:
-        raise ValidationError('Incorrect position.')
+        raise ValidationError('Incorrect value for position. It must be higher than 0.')
 
 def validate_pos_compl(value):
     if value < 0:
-        raise ValidationError('Incorrect value for position.')
+        raise ValidationError('Incorrect value for position. It must be 0 or higher.')
 
 def validate_pat_IUPAC(value):
     aux = "ACGTURYSWKMBDHVN"
@@ -22,13 +22,16 @@ def validate_pat_IUPAC(value):
             raise ValidationError('No IUPAC values in pattern.')
 
 def validate_pos_in_pattern(form):
+    message=""
     i = 1
     while i <= 6:
         aux = 'pos_pat'+str(i)
         pat = 'patron'+str(i)
-        if form.data[aux]:
+        if form.data[pat] and not form.data[aux]:
+            message=message+' - No position for pattern '+str(i)+'.'
+        elif form.data[aux]:
             if len(form.data[pat])<int(form.data[aux]):
-                message= message+'\nIncorrect position for pattern '+str(i)+'.'
+                message= message+' - Incorrect position for pattern '+str(i)+'. It must be within the pattern.'
         i=i+1
     return message
 
@@ -38,9 +41,11 @@ def validate_pos_in_compl_pat(form):
     while i <= 6:
         aux = 'pos_compl_pat'+str(i)
         pat = 'compl_pat'+str(i)
-        if form.data[aux]:
+        if form.data[pat] and not form.data[aux]:
+            message=message+' - No position for complementary pattern '+str(i)+'.'
+        elif form.data[aux]:
             if len(form.data[pat])<int(form.data[aux]):
-                message= message+'\nIncorrect position for complementary pattern '+str(i)+'.'
+                message= message+' - Incorrect position for complementary pattern '+str(i)+'. It must be within the pattern or be 0.'
         i=i+1
     return message
 
@@ -51,6 +56,6 @@ def validate_comp_if_pattern(form):
         aux = 'compl_pat'+str(i)
         pat = 'patron'+str(i)
         if form.data[aux] and not form.data[pat]: 
-            message= message+'\nInvalid lone complementary pattern '+str(i)+'.'
+            message= message+' - Invalid lone complementary pattern '+str(i)+'.'
         i=i+1
     return message
