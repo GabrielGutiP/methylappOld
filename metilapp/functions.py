@@ -1,6 +1,7 @@
 import os
 import csv
 from collections import Counter
+from pyfaidx import Fasta
 
 def handle_uploaded_file(f):  
     with open('./metilapp/'+f.name, 'wb+') as destination:  
@@ -24,6 +25,11 @@ def read_file_gff(f_name):
                     result.append(aux)
     file.close()
     return result
+
+def read_fasta(f_name):
+    fasta = Fasta(f_name)
+    fasta.close()
+    return fasta
 
 def methyl_type_stadistics(data):
     dic = dict()
