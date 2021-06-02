@@ -7,6 +7,12 @@ def validate_file_extension(value):
     if not ext.lower() in valid_extensions:
         raise ValidationError('Unsupported file extension.')
 
+def validate_genome_extension(value):
+    ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+    valid_extensions = ['.fasta']
+    if not ext.lower() in valid_extensions:
+        raise ValidationError('Unsupported file extension.')
+
 def validate_pos_pat(value):
     if value <= 0:
         raise ValidationError('Incorrect value for position. It must be higher than 0.')

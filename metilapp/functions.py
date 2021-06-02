@@ -1,6 +1,7 @@
 import os
 import csv
 from collections import Counter
+from pyfaidx import Fasta
 
 def handle_uploaded_file(f):  
     with open('./metilapp/'+f.name, 'wb+') as destination:  
@@ -9,6 +10,13 @@ def handle_uploaded_file(f):
 
 def delete_file(f):
     if os.path.exists('./metilapp/'+f.name):
+        os.remove('./metilapp/'+f.name)
+    else:
+        print(f+"does not exist")  
+
+def delete_fasta(f):
+    if os.path.exists('./metilapp/'+f.name):
+        os.remove('./metilapp/'+f.name+".fai")
         os.remove('./metilapp/'+f.name)
     else:
         print(f+"does not exist")  
@@ -24,6 +32,11 @@ def read_file_gff(f_name):
                     result.append(aux)
     file.close()
     return result
+
+def read_fasta(f_name):
+    fasta = Fasta(f_name)
+    fasta.close()
+    return fasta
 
 def methyl_type_stadistics(data):
     dic = dict()
