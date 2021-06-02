@@ -1,6 +1,6 @@
 from .validators import validate_comp_if_pattern, validate_pos_in_compl_pat, validate_pos_in_pattern
 from .forms import MetilForm
-from .functions import delete_file, handle_uploaded_file, methyl_type_stadistics, read_fasta, read_file_gff
+from .functions import delete_fasta, delete_file, handle_uploaded_file, methyl_type_stadistics, read_fasta, read_file_gff
 from django.shortcuts import render
 
 # Create your views here.
@@ -29,7 +29,7 @@ def main_page(request):
             data_fasta = read_fasta('metilapp/'+g.name)
 
             delete_file(f)
-            delete_file(g)
+            delete_fasta(g)
             return render(request,'metilapp/result.html', {'message': message, 'jobID': jobID, 'total_m': base_sts[0], 'chrom_m': base_sts[1], 'fasta': data_fasta.keys()})
         else:
             message = form.errors

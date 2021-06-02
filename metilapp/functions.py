@@ -14,6 +14,13 @@ def delete_file(f):
     else:
         print(f+"does not exist")  
 
+def delete_fasta(f):
+    if os.path.exists('./metilapp/'+f.name):
+        os.remove('./metilapp/'+f.name+".fai")
+        os.remove('./metilapp/'+f.name)
+    else:
+        print(f+"does not exist")  
+
 def read_file_gff(f_name):
     result = []
     with open(f_name, 'r') as file:
