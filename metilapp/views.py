@@ -30,7 +30,7 @@ def main_page(request):
 
             delete_file(f)
 
-            return render(request,'metilapp/result.html', {'message': message, 'jobID': jobID, 'total_m': base_sts[0], 'chrom_m': base_sts[1], 
+            return render(request,'metilapp/result.html', {'message': message, 'met_name': f.name, 'fasta_name': g.name, 'jobID': jobID, 'total_m': base_sts[0], 'chrom_m': base_sts[1], 
                     'count_pat': data_fasta[1], 'count_compl_pat': data_fasta[3]})
         else:
             message = form.errors
