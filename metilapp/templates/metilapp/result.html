@@ -60,11 +60,11 @@
                 </tr>
             </head>
             <body>
-                {% for v, k in count_pat %}
+                {% for v, k in index_pat %}
                 <tr>
-                    <td>{{ v }}</td>
                     <td>{{ k.0 }}</td>
                     <td>{{ k.1 }}</td>
+                    <td>{{ k.3 }}</td>
                 </tr>
                 {% endfor %}
             </body>
@@ -79,11 +79,11 @@
                 </tr>
             </head>
             <body>
-                {% for v, k in count_compl_pat %}
+                {% for v, k in index_compl_pat %}
                 <tr>
-                    <td>{{ v }}</td>
                     <td>{{ k.0 }}</td>
                     <td>{{ k.1 }}</td>
+                    <td>{{ k.3 }}</td>
                 </tr>
                 {% endfor %}
             </body>

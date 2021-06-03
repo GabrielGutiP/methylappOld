@@ -18,9 +18,8 @@ def delete_file(f):
 
 def delete_fasta(f):
     if os.path.exists(f):
-        #f.close()
-        os.remove(f+".fai")
         os.remove(f)
+        os.remove(f+".fai")
     else:
         print(f+"does not exist")  
 
@@ -53,29 +52,24 @@ def methyl_type_stadistics(data):
     return sol, dic.items()
 
 def patterns_in_genome(data, patterns, compl_pats):
-    count_pat = dict()
-    count_compl_pat = dict()
     index_pat = dict()
     index_compl_pat = dict()
-
+    i = 0
     for c in data.keys():                                   # Busqueda de patrones en cada cromosoma
-        dic_aux = dict()
-        for p in patterns:
-            chrom = str(data[c][:].seq)
-            seq = SeqUtils.nt_search(chrom, p[0])           # Repetición del patrón con IUPAC en el cromosoma  
-            dic_aux[p] = seq[1:]
-            count_pat[c]= [p[0],len(seq)-1]                 # Conteo de repeticiones del patrón con el cromosoma
-        index_pat[c]=dic_aux.items()
-    
+        chrom = str(data[c][:].seq)
+        for p in patterns.keys():
+            seq = SeqUtils.nt_search(chrom, p)           # Repetición del patrón con IUPAC en el cromosoma 
+            index_pat[i] = [c, p, seq[1:], len(seq)-1]  # 0-based las posiciones de inicio de los patrones encontrados. Conteo de repeticiones del patrón con el cromosoma
+            i=i+1
+    i = 0
     for c in data.keys():                                   # Busqueda de patrones complementarios
-        dic_aux = dict()
-        for p in compl_pats:
-            chrom = data[c][:].seq
-            seq = SeqUtils.nt_search(chrom, p[0])           # Repetición del patrón con IUPAC en el cromosoma  
-            dic_aux[p] = seq[1:]
-            count_compl_pat[c]= [p[0],len(seq)-1]
-        index_compl_pat[c]=dic_aux.items()
-    return count_pat.items(), count_pat.items(), count_compl_pat.items(), count_compl_pat.items()
+        chrom = str(data[c][:].seq)
+        for p in compl_pats.keys():
+            seq = SeqUtils.nt_search(chrom, p)           # Repetición del patrón con IUPAC en el cromosoma 
+            index_compl_pat[i] = [c, p, seq[1:], len(seq)-1]  # 0-based las posiciones de inicio de los patrones encontrados. Conteo de repeticiones del patrón con el cromosoma
+            i=i+1
+
+    return index_pat.items(), index_compl_pat.items()
 
 def input_builder(form):
     pat = dict()
@@ -83,9 +77,9 @@ def input_builder(form):
     i = 1
     while i<=6:
         if form.data['patron'+str(i)]:
-            pat[form.data['patron'+str(i)]] = form.data['pos_pat'+str(i)]
+            pat[form.data['patron'+str(i)].strip()] = form.data['pos_pat'+str(i)]
         
         if form.data['compl_pat'+str(i)]:
-            compl_pat[form.data['compl_pat'+str(i)]] = form.data['pos_compl_pat'+str(i)]
+            compl_pat[form.data['compl_pat'+str(i)].strip()] = form.data['pos_compl_pat'+str(i)]
         i=i+1
-    return pat.items(), compl_pat.items()
+    return pat, compl_pat
