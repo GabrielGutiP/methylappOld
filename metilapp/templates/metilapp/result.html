@@ -4,6 +4,8 @@
     </head>
 {% block content %}
     <body>
+        <p>SMRT Methylation Output (.gff): {{  }}</p>
+        <p>Genome (.fasta): {{  }}</p>
         {{message}}
         <br><br>
         <h2>SMRT Methylation Output (.gff) Summary:</h2>
@@ -48,8 +50,44 @@
                 {% endfor%}
             </tbody>
         </table>
-        <h2>Genome (.fasta) Summary:</h2>
-        <p>{{ fasta }}</p>
+        <h2>Genome pattern distribution Summary:</h2>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Pattern</th>
+                    <th>Matches</th>
+                </tr>
+            </head>
+            <body>
+                {% for v, k in count_pat %}
+                <tr>
+                    <td>{{ v }}</td>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br><br>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Complementary Pattern</th>
+                    <th>Matches</th>
+                </tr>
+            </head>
+            <body>
+                {% for v, k in count_compl_pat %}
+                <tr>
+                    <td>{{ v }}</td>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
         <br><br>
         <button><a href="/">Back</a></button>    
     </body>
