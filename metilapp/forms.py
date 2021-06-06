@@ -6,6 +6,7 @@ from .validators import validate_file_extension, validate_genome_extension, vali
 class MetilForm(forms.Form):
      m_out = forms.FileField(label="SMRT Methylation Output (.gff)", validators=[validate_file_extension])
      genome = forms.FileField(label="Genome file Fasta Format (.fasta)", validators=[validate_genome_extension])
+     gene = forms.FileField(label="Genes Output (.gff)", validators=[validate_file_extension])
      job_ID = forms.CharField(label="Job ID" , required=False)
 
 
