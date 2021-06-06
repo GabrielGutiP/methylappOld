@@ -26,12 +26,12 @@ def main_page(request):
             data_gff = read_file_gff('metilapp/'+f.name)
             base_sts = methyl_type_stadistics(data_gff)
 
-            data_fasta = read_fasta('metilapp/'+g.name, patterns[0], patterns[1])
+            data_fasta = read_fasta('metilapp/'+g.name, data_gff, patterns)
 
             delete_file(f)
 
-            return render(request,'metilapp/result.html', {'message': message, 'met_name': f.name, 'fasta_name': g.name, 'jobID': jobID, 'total_m': base_sts[0], 'chrom_m': base_sts[1], 
-                    'index_pat': data_fasta[0], 'index_compl_pat': data_fasta[1]})
+            return render(request,'metilapp/result.html', {'message': message, 'patterns': patterns.items(), 'met_name': f.name, 'fasta_name': g.name, 'jobID': jobID, 'total_m': base_sts[0], 'chrom_m': base_sts[1], 
+                    'index_pat': data_fasta[0].items(), 'pat_status': data_fasta[1][0], 'num_st': data_fasta[1][1]})
         else:
             message = form.errors
     form = MetilForm()

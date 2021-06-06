@@ -53,20 +53,18 @@
         <h2>Genome pattern distribution Summary:</h2>
         <table>
             <head>
-                <tr>
-                    <th>Chromosome</th>
-                    <th>Pattern</th>
-                    <th>Matches</th>
-                </tr>
+                <th>Patterns-Complementary</th>
+                <th>Position</th>
+                <th>Complementary position</th>
             </head>
             <body>
-                {% for v, k in index_pat %}
+                {% for key, value in patterns %}
                 <tr>
-                    <td>{{ k.0 }}</td>
-                    <td>{{ k.1 }}</td>
-                    <td>{{ k.3 }}</td>
+                    <td>{{ key }}</td>
+                    <td>{{ value.0 }}</td>
+                    <td>{{ value.1 }}</td>
                 </tr>
-                {% endfor %}
+                {% endfor%}
             </body>
         </table>
         <br><br>
@@ -74,21 +72,64 @@
             <head>
                 <tr>
                     <th>Chromosome</th>
-                    <th>Complementary Pattern</th>
-                    <th>Matches</th>
+                    <th>Pattern</th>
+                    <th>Total matches</th>
+                    <th>M_M</th>
+                    <th>% MM</th>
+                    <th>M_N</th>
+                    <th>% MN</th>
+                    <th>N_M</th>
+                    <th>% NM</th>
+                    <th>N_N</th>
+                    <th>% NN</th>
                 </tr>
             </head>
             <body>
-                {% for v, k in index_compl_pat %}
+                {% for k in num_st %}
                 <tr>
                     <td>{{ k.0 }}</td>
+                    <td>{{ k.10 }}</td>
+                    <td>{{ k.5 }}</td>
                     <td>{{ k.1 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.7 }}</td>
                     <td>{{ k.3 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.9 }}</td>
                 </tr>
                 {% endfor %}
             </body>
         </table>
         <br><br>
+        <h2>Methylation status</h2>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Pattern</th>
+                    <th>Methylation</th>
+                    <th>Starting coordenate</th>
+                    <th>Putative coor. in W</th>
+                    <th>Putative coor. in C</th>
+                    <th>Status</th>
+                </tr>
+            </head>
+            <body>
+                {% for k in pat_status %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
         <button><a href="/">Back</a></button>    
     </body>
 {% endblock %}
