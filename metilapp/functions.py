@@ -35,6 +35,26 @@ def read_file_gff(f_name):
     file.close()
     return result
 
+def read_gene_gff(f_name):
+    result = []
+    with open(f_name, 'r') as file:
+        reader = csv.reader(file, delimiter = '\t')
+        for row in reader:
+            if not row[0].startswith('#'):
+                if row[2] in ["CDS","rRNA","tRNA"]:
+                    aux_r = []
+                    for r in row[8].split(";"):
+                        if r.startswith('ID'):
+                            aux_r.append(r.split("=")[1])
+                        elif r.startswith('Parent'):
+                            aux_r.append(r.replace("Parent=gene-", ""))
+                        elif r.startswith('product'):
+                            aux_r.append(r.split("=")[1])
+                    aux = [row[0], row[2], int(row[3]), int(row[4]), row[6], aux_r]
+                    result.append(aux)
+    file.close()
+    return result
+
 def read_fasta(f_name, data_gff, complete_pat):
     fasta = Fasta(f_name)
     result = patterns_in_genome(fasta, complete_pat)
@@ -115,6 +135,7 @@ def met_pat_opt(gff, index_complete):
                 pos_neg = s+1+len(aux_p[0])-int(i[4])
                 if pos_posit in met.keys():
                     t_met = met[pos_posit]
+
                     aux = "M_"
                 else:
                     t_met = "None"
