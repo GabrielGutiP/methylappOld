@@ -35,7 +35,7 @@ def read_file_gff(f_name):
     file.close()
     return result
 
-def read_gene_gff(f_name):
+def read_gene_gff(f_name, prom):
     result = []
     with open(f_name, 'r') as file:
         reader = csv.reader(file, delimiter = '\t')
@@ -45,12 +45,15 @@ def read_gene_gff(f_name):
                     aux_r = []
                     for r in row[8].split(";"):
                         if r.startswith('ID'):
-                            aux_r.append(r.split("=")[1])
+                            aux_r.append(r.split("=")[1].split("-")[1])
                         elif r.startswith('Parent'):
                             aux_r.append(r.replace("Parent=gene-", ""))
                         elif r.startswith('product'):
                             aux_r.append(r.split("=")[1])
-                    aux = [row[0], row[2], int(row[3]), int(row[4]), row[6], aux_r]
+                    if row[6]=="+":
+                        aux = [row[0], row[2], [int(row[3]), int(row[4])], [int(row[3])-int(prom), int(row[3])], row[6], aux_r]  # Cromosoma, gen, rango gen, rango promotor, cadena y descripcion
+                    else:
+                        aux = [row[0], row[2], [int(row[3]), int(row[4])], [int(row[4]), int(row[4])+int(prom)], row[6], aux_r]
                     result.append(aux)
     file.close()
     return result
@@ -158,6 +161,24 @@ def met_pat_opt(gff, index_complete):
         num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2)
             , round(100*(int(c_NN)/int(i[3])), 2), i[1]])
     return result, num_st
+
+def met_in_genes(gff, gene):
+    # Mostrar Cromosoma|Accession number|Parent|Product|Tipo gen|Coor. inicio|Coor. final|Cadena|Tipos de metilaciones(m4C, m6A...)|Total
+    met_gen = []
+    met_prom = []
+    for g in gene:
+        met = dict()
+        metP = dict()
+        for row in gff:
+            if int(g[2][0]) <= int(row[2]) <= int(g[2][1]):
+                met[row[2]] = row[1]
+            if int(g[3][0]) <= int(row[2]) <= int(g[3][1]):
+                metP[row[2]] = row[1]
+        aux = Counter(met.values())
+        aux_p = Counter(metP.values())
+        met_gen.append([g[0], g[5][0], g[5][1], g[5][2], g[1], g[2][0], g[2][1], g[4], aux["m4C"], aux["m6A"], aux["m5C"], len(met.keys())])
+        met_prom.append([g[0], g[5][0], g[5][1], g[5][2], g[1], g[3][0], g[3][1], g[4], aux_p["m4C"], aux_p["m6A"], aux_p["m5C"], len(metP.keys())])
+    return met_gen, met_prom
 
 def input_builder(form):
     complete_pat = dict()

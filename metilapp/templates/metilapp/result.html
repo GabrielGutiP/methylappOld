@@ -5,8 +5,8 @@
 {% block content %}
     <body>
         <p>SMRT Methylation Output (.gff): {{ met_name }}</p>
-        <p>Genome (.fasta): {{ fasta_name }}</p>
-        <p>Genes output (.gff): {{ gene_name }}</p>
+        <p>Genome file (.fasta): {{ fasta_name }}</p>
+        <p>Genome anotation file (.gff) {{ gene_name }}</p>
         {{message}}
         <br><br>
         <h2>SMRT Methylation Output (.gff) Summary:</h2>
@@ -127,6 +127,81 @@
                     <td>{{ k.3 }}</td>
                     <td>{{ k.4 }}</td>
                     <td>{{ k.5 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h2>Genome anotation summary:</h2>
+        <h3>Metilations in genes</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Feature</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>m4C</th>
+                    <th>m6A</th>
+                    <th>m5C</th>
+                    <th>Total</th>
+                </tr>
+            </head>
+            <body>
+                {% for k in metGen %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                    <td>{{ k.10 }}</td>
+                    <td>{{ k.11 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h3>Metilations in promoters</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Feature</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>m4C</th>
+                    <th>m6A</th>
+                    <th>m5C</th>
+                    <th>Total</th>
+                </tr>
+            </head>
+            <body>
+                {% for k in metProm %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                    <td>{{ k.10 }}</td>
+                    <td>{{ k.11 }}</td>
                 </tr>
                 {% endfor %}
             </body>
