@@ -51,9 +51,9 @@ def read_gene_gff(f_name, prom):
                         elif r.startswith('product'):
                             aux_r.append(r.split("=")[1])
                     if row[6]=="+":
-                        aux = [row[0], row[2], [int(row[3]), int(row[4])], [int(row[3])-int(prom), int(row[3])], row[6], aux_r]  # Cromosoma, gen, rango gen, rango promotor, cadena y descripcion
+                        aux = [row[0], row[2], [int(row[3]), int(row[4])], [int(row[3])-1-int(prom), int(row[3])-1], row[6], aux_r]  # Cromosoma, gen, rango gen, rango promotor, cadena y descripcion
                     else:
-                        aux = [row[0], row[2], [int(row[3]), int(row[4])], [int(row[4]), int(row[4])+int(prom)], row[6], aux_r]
+                        aux = [row[0], row[2], [int(row[3]), int(row[4])], [int(row[4])+1, int(row[4])+1+int(prom)], row[6], aux_r]
                     result.append(aux)
     file.close()
     return result
@@ -165,20 +165,33 @@ def met_pat_opt(gff, index_complete):
 def met_in_genes(gff, gene):
     # Mostrar Cromosoma|Accession number|Parent|Product|Tipo gen|Coor. inicio|Coor. final|Cadena|Tipos de metilaciones(m4C, m6A...)|Total
     met_gen = []
+    metGen = dict() #Cromosoma|Tipo met|Coor met|Tipo gen|Parent|Description|Coor. inicio|Coor. final|Cadena gen|Cadena met
     met_prom = []
+    prom = dict()
     for g in gene:
         met = dict()
         metP = dict()
         for row in gff:
-            if int(g[2][0]) <= int(row[2]) <= int(g[2][1]):
-                met[row[2]] = row[1]
-            if int(g[3][0]) <= int(row[2]) <= int(g[3][1]):
-                metP[row[2]] = row[1]
+            if row[0]==g[0]:
+                if int(g[2][0]) <= int(row[2]) <= int(g[2][1]):
+                    met[row[2]] = row[1]
+                    if not row[0]+"-"+str(row[2]) in metGen.keys() or metGen[row[0]+"-"+str(row[2])][3] == "NA":
+                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[2][0], g[2][1], g[4], row[3]]
+                else:
+                    if not row[0]+"-"+str(row[2]) in metGen.keys():
+                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3]]
+                if int(g[3][0]) <= int(row[2]) <= int(g[3][1]):
+                    metP[row[2]] = row[1]
+                    if not row[0]+"-"+str(row[2]) in prom.keys() or prom[row[0]+"-"+str(row[2])][3] == "NA":
+                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[3][0], g[3][1], g[4], row[3]]
+                else:
+                    if not row[0]+"-"+str(row[2]) in prom.keys():
+                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3]]
         aux = Counter(met.values())
         aux_p = Counter(metP.values())
         met_gen.append([g[0], g[5][0], g[5][1], g[5][2], g[1], g[2][0], g[2][1], g[4], aux["m4C"], aux["m6A"], aux["m5C"], len(met.keys())])
         met_prom.append([g[0], g[5][0], g[5][1], g[5][2], g[1], g[3][0], g[3][1], g[4], aux_p["m4C"], aux_p["m6A"], aux_p["m5C"], len(metP.keys())])
-    return met_gen, met_prom
+    return met_gen, met_prom, metGen.items(), prom.items()
 
 def input_builder(form):
     complete_pat = dict()

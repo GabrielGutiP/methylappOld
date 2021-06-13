@@ -206,6 +206,72 @@
                 {% endfor %}
             </body>
         </table>
+        <h3>Each metilations asociated gen</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Met. type</th>
+                    <th>Coor. met.</th>
+                    <th>Feature</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Gen strand</th>
+                    <th>Met. strand</th>
+                </tr>
+            </head>
+            <body>
+                {% for v, k in genMets %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h3>Each metilations asociated promoters</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Met. type</th>
+                    <th>Coor. met.</th>
+                    <th>Feature</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Gen strand</th>
+                    <th>Met. strand</th>
+                </tr>
+            </head>
+            <body>
+                {% for v, k in promMets %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
         <button><a href="/">Back</a></button>    
     </body>
 {% endblock %}
