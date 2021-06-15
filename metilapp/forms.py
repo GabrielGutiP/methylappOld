@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from django.forms.fields import IntegerField
-from .validators import validate_file_extension, validate_genome_extension, validate_pat_IUPAC, validate_pos_compl, validate_pos_in_pattern, validate_pos_pat
+from .validators import validate_file_extension, validate_genome_extension, validate_pat_IUPAC, validate_pos_compl, validate_pos_pat
 
 class MetilForm(forms.Form):
      m_out = forms.FileField(label="SMRT Methylation Output (.gff)", validators=[validate_file_extension])

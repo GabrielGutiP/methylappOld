@@ -272,6 +272,95 @@
                 {% endfor %}
             </body>
         </table>
+        <br><br>
+        <h3>Patterns in gen</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Feature</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>Total</th>
+                    {% for v, k in pattGen.0.9 %}
+                    <th>{{ v }}</th>
+                    <th>M_M</th>
+                    <th>M_N</th>
+                    <th>N_M</th>
+                    <th>N_N</th>
+                    {% endfor %}
+                </tr>
+            </head>
+            <body>
+                {% for k in pattGen %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    {% for v, i in k.9 %}
+                    <td>{{ v }}</td>
+                        {% for k in i %}
+                        <td>{{ k }}</td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h3>Patterns in promoters</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Feature</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>Total</th>
+                    {% for v, k in pattGen.0.9 %}
+                    <th>{{ v }}</th>
+                    <th>M_M</th>
+                    <th>M_N</th>
+                    <th>N_M</th>
+                    <th>N_N</th>
+                    {% endfor %}
+                </tr>
+            </head>
+            <body>
+                {% for k in pattGen %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    {% for v, i in k.9 %}
+                    <td>{{ v }}</td>
+                        {% for k in i %}
+                        <td>{{ k }}</td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
         <button><a href="/">Back</a></button>    
     </body>
 {% endblock %}
