@@ -1,9 +1,8 @@
 <html>
     <head>
-        <h1>Welcome to MetilApp</h1>
+        <h1>Welcome to MethylApp</h1>
     </head>
     <body>
-        <button><a href="/">Reset</a></button> 
         <form method="POST" class="post-form" enctype="multipart/form-data">  
             {% csrf_token %}  
             <p>
@@ -17,9 +16,15 @@
             <p>
                 <h2>{{ form.genome.label }}</h2>
                 {{ form.genome }}
+                <h2>{{ form.prom.label }}</h2>
+                {{ form.prom }}
+            </p>
+            <p>
+                <h2>{{ form.gene.label }}</h2>
+                {{ form.gene }}
             </p>
             <br><br>
-            <p>You must add also the complementary.</p>
+            <p>You must add also the complementary pattern.</p>
             <p>In complementary pattern position 0 means that the pattern is not methylated.</p>
             <p>If a autocomplementary pattern is added, it will be counted the position given in the first box.</p>
             <table>
@@ -89,5 +94,6 @@
         </form>  
         <p>{{message}}</p>
         <p>{{val}}</p>
+        <button><a href="/">Reset</a></button> 
     </body>
 </html>
