@@ -1,3 +1,5 @@
 Django~=3.2.1
 django-heroku
 gunicorn
+pyfaidx
+biopython

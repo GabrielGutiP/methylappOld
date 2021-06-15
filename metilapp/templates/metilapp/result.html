@@ -4,6 +4,9 @@
     </head>
 {% block content %}
     <body>
+        <p>SMRT Methylation Output (.gff): {{ met_name }}</p>
+        <p>Genome file (.fasta): {{ fasta_name }}</p>
+        <p>Genome anotation file (.gff) {{ gene_name }}</p>
         {{message}}
         <br><br>
         <h2>SMRT Methylation Output (.gff) Summary:</h2>
@@ -48,7 +51,316 @@
                 {% endfor%}
             </tbody>
         </table>
+        <h2>Genome pattern distribution Summary:</h2>
+        <table>
+            <head>
+                <th>Patterns-Complementary</th>
+                <th>Position</th>
+                <th>Complementary position</th>
+            </head>
+            <body>
+                {% for key, value in patterns %}
+                <tr>
+                    <td>{{ key }}</td>
+                    <td>{{ value.0 }}</td>
+                    <td>{{ value.1 }}</td>
+                </tr>
+                {% endfor%}
+            </body>
+        </table>
         <br><br>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Pattern</th>
+                    <th>Total matches</th>
+                    <th>M_M</th>
+                    <th>% MM</th>
+                    <th>M_N</th>
+                    <th>% MN</th>
+                    <th>N_M</th>
+                    <th>% NM</th>
+                    <th>N_N</th>
+                    <th>% NN</th>
+                </tr>
+            </head>
+            <body>
+                {% for k in num_st %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.10 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.9 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br><br>
+        <h2>Methylation status</h2>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Pattern</th>
+                    <th>Methylation</th>
+                    <th>Starting coordenate</th>
+                    <th>Putative coor. in W</th>
+                    <th>Putative coor. in C</th>
+                    <th>Status</th>
+                </tr>
+            </head>
+            <body>
+                {% for k in pat_status %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h2>Genome anotation summary:</h2>
+        <h3>Metilations in genes</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Feature</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>m4C</th>
+                    <th>m6A</th>
+                    <th>m5C</th>
+                    <th>Total</th>
+                </tr>
+            </head>
+            <body>
+                {% for k in metGen %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                    <td>{{ k.10 }}</td>
+                    <td>{{ k.11 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h3>Metilations in promoters</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Feature</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>m4C</th>
+                    <th>m6A</th>
+                    <th>m5C</th>
+                    <th>Total</th>
+                </tr>
+            </head>
+            <body>
+                {% for k in metProm %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                    <td>{{ k.10 }}</td>
+                    <td>{{ k.11 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h3>Each metilations asociated gen</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Met. type</th>
+                    <th>Coor. met.</th>
+                    <th>Feature</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Gen strand</th>
+                    <th>Met. strand</th>
+                </tr>
+            </head>
+            <body>
+                {% for v, k in genMets %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h3>Each metilations asociated promoters</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Met. type</th>
+                    <th>Coor. met.</th>
+                    <th>Feature</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Gen strand</th>
+                    <th>Met. strand</th>
+                </tr>
+            </head>
+            <body>
+                {% for v, k in promMets %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    <td>{{ k.9 }}</td>
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <br><br>
+        <h3>Patterns in gen</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Feature</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>Total</th>
+                    {% for v, k in pattGen.0.9 %}
+                    <th>{{ v }}</th>
+                    <th>M_M</th>
+                    <th>M_N</th>
+                    <th>N_M</th>
+                    <th>N_N</th>
+                    {% endfor %}
+                </tr>
+            </head>
+            <body>
+                {% for k in pattGen %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    {% for v, i in k.9 %}
+                    <td>{{ v }}</td>
+                        {% for k in i %}
+                        <td>{{ k }}</td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
+        <h3>Patterns in promoters</h3>
+        <table>
+            <head>
+                <tr>
+                    <th>Chromosome</th>
+                    <th>Feature</th>
+                    <th>Accession number</th>
+                    <th>Gen</th>
+                    <th>Description</th>
+                    <th>Start</th>
+                    <th>End</th>
+                    <th>Strand</th>
+                    <th>Total</th>
+                    {% for v, k in pattGen.0.9 %}
+                    <th>{{ v }}</th>
+                    <th>M_M</th>
+                    <th>M_N</th>
+                    <th>N_M</th>
+                    <th>N_N</th>
+                    {% endfor %}
+                </tr>
+            </head>
+            <body>
+                {% for k in pattGen %}
+                <tr>
+                    <td>{{ k.0 }}</td>
+                    <td>{{ k.1 }}</td>
+                    <td>{{ k.2 }}</td>
+                    <td>{{ k.3 }}</td>
+                    <td>{{ k.4 }}</td>
+                    <td>{{ k.5 }}</td>
+                    <td>{{ k.6 }}</td>
+                    <td>{{ k.7 }}</td>
+                    <td>{{ k.8 }}</td>
+                    {% for v, i in k.9 %}
+                    <td>{{ v }}</td>
+                        {% for k in i %}
+                        <td>{{ k }}</td>
+                        {% endfor %}
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </body>
+        </table>
         <button><a href="/">Back</a></button>    
     </body>
 {% endblock %}
