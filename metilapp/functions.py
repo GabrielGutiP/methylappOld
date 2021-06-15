@@ -58,13 +58,14 @@ def read_gene_gff(f_name, prom):
     file.close()
     return result
 
-def read_fasta(f_name, data_gff, complete_pat):
+def read_fasta(f_name, data_gff, complete_pat, met_gen, met_prom):
     fasta = Fasta(f_name)
     result = patterns_in_genome(fasta, complete_pat)
     result_met = met_pat_opt(data_gff, result)
+    patt_gen = patterns_in_genes(met_gen, met_prom, result_met[0])
     fasta.close()
     delete_fasta(f_name)
-    return result, result_met
+    return result, result_met , patt_gen[0], patt_gen[1]
 
 def methyl_type_stadistics(data):
     dic = dict()
@@ -138,7 +139,6 @@ def met_pat_opt(gff, index_complete):
                 pos_neg = s+1+len(aux_p[0])-int(i[4])
                 if pos_posit in met.keys():
                     t_met = met[pos_posit]
-
                     aux = "M_"
                 else:
                     t_met = "None"
@@ -157,9 +157,9 @@ def met_pat_opt(gff, index_complete):
                 c_NM = c_NM+1
             elif aux=="N_N":
                 c_NN = c_NN+1
-            result.append([i[0], i[1], s+1, pos_posit, pos_neg, aux, t_met])
-        num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2)
-            , round(100*(int(c_NN)/int(i[3])), 2), i[1]])
+            result.append([i[0], i[1], s+1, pos_posit, pos_neg, aux, t_met])    # Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met
+        num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2), 
+            round(100*(int(c_NN)/int(i[3])), 2), i[1]])
     return result, num_st
 
 def met_in_genes(gff, gene):
@@ -176,22 +176,78 @@ def met_in_genes(gff, gene):
                 if int(g[2][0]) <= int(row[2]) <= int(g[2][1]):
                     met[row[2]] = row[1]
                     if not row[0]+"-"+str(row[2]) in metGen.keys() or metGen[row[0]+"-"+str(row[2])][3] == "NA":
-                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[2][0], g[2][1], g[4], row[3]]
+                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[2][0], g[2][1], g[4], row[3], g[5][0]]
                 else:
                     if not row[0]+"-"+str(row[2]) in metGen.keys():
-                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3]]
+                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3], g[5][0]]
                 if int(g[3][0]) <= int(row[2]) <= int(g[3][1]):
                     metP[row[2]] = row[1]
                     if not row[0]+"-"+str(row[2]) in prom.keys() or prom[row[0]+"-"+str(row[2])][3] == "NA":
-                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[3][0], g[3][1], g[4], row[3]]
+                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[3][0], g[3][1], g[4], row[3], g[5][0]]
                 else:
                     if not row[0]+"-"+str(row[2]) in prom.keys():
-                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3]]
+                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3], g[5][0]]
         aux = Counter(met.values())
         aux_p = Counter(metP.values())
         met_gen.append([g[0], g[5][0], g[5][1], g[5][2], g[1], g[2][0], g[2][1], g[4], aux["m4C"], aux["m6A"], aux["m5C"], len(met.keys())])
         met_prom.append([g[0], g[5][0], g[5][1], g[5][2], g[1], g[3][0], g[3][1], g[4], aux_p["m4C"], aux_p["m6A"], aux_p["m5C"], len(metP.keys())])
-    return met_gen, met_prom, metGen.items(), prom.items()
+    return met_gen, met_prom, metGen, prom
+
+def patterns_in_genes(met_gen, met_prom, patt):
+    # Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met
+    # Cromosoma|Accession number|Parent|Product|Tipo gen|Coor. inicio|Coor. final|Cadena|Tipos de metilaciones(m4C, m6A...)|Total
+    pat_gen = []    # Cromosoma|Tipo gen|Accession number|Parent|Description|Coor. init|Coor. fin|Cadena|Patron|MM|MN|NM|NN|... 
+    pat_prom = []
+    for g in met_gen:
+        dicc = dict()
+        stat = dict()
+        total = 0
+        for met in patt:
+            if met[0]==g[0]:
+                if not met[1] in dicc.keys():
+                    stat[met[1]+'M_M'] = 0
+                    stat[met[1]+'M_N'] = 0
+                    stat[met[1]+'N_M'] = 0
+                    stat[met[1]+'N_N'] = 0
+                    dicc[met[1]] = [stat[met[1]+'M_M'],stat[met[1]+'M_N'],stat[met[1]+'N_M'],stat[met[1]+'N_N']]
+                if int(g[5])<=int(met[3])<=int(g[6]) or int(g[5])<=int(met[4])<=int(g[6]):
+                    total = total+1
+                    if met[5] == 'M_M':
+                        stat[met[1]+'M_M'] = stat[met[1]+'M_M']+1
+                    elif met[5] == 'M_N':
+                        stat[met[1]+'M_N'] = stat[met[1]+'M_N']+1
+                    elif met[5] == 'N_M':
+                        stat[met[1]+'N_M'] = stat[met[1]+'N_M']+1
+                    elif met[5] == 'N_N':
+                        stat[met[1]+'N_N'] = stat[met[1]+'N_N']+1
+                    dicc[met[1]] = [stat[met[1]+'M_M'],stat[met[1]+'M_N'],stat[met[1]+'N_M'],stat[met[1]+'N_N']]
+        pat_gen.append([g[0], g[4], g[1], g[2], g[3], g[5], g[6], g[7], total, Counter(dicc).items()])
+    
+    for g in met_prom:
+        dicc = dict()
+        stat = dict()
+        total = 0
+        for met in patt:
+            if met[0]==g[0]:
+                if not met[1] in dicc.keys():
+                    stat[met[1]+'M_M'] = 0
+                    stat[met[1]+'M_N'] = 0
+                    stat[met[1]+'N_M'] = 0
+                    stat[met[1]+'N_N'] = 0
+                    dicc[met[1]] = [stat[met[1]+'M_M'],stat[met[1]+'M_N'],stat[met[1]+'N_M'],stat[met[1]+'N_N']]
+                if int(g[5])<=int(met[3])<=int(g[6]) or int(g[5])<=int(met[4])<=int(g[6]):
+                    total = total+1
+                    if met[5] == 'M_M':
+                        stat[met[1]+'M_M'] = stat[met[1]+'M_M']+1
+                    elif met[5] == 'M_N':
+                        stat[met[1]+'M_N'] = stat[met[1]+'M_N']+1
+                    elif met[5] == 'N_M':
+                        stat[met[1]+'N_M'] = stat[met[1]+'N_M']+1
+                    elif met[5] == 'N_N':
+                        stat[met[1]+'N_N'] = stat[met[1]+'N_N']+1
+                    dicc[met[1]] = [stat[met[1]+'M_M'],stat[met[1]+'M_N'],stat[met[1]+'N_M'],stat[met[1]+'N_N']]
+        pat_prom.append([g[0], g[4], g[1], g[2], g[3], g[5], g[6], g[7], total, Counter(dicc).items()])
+    return pat_gen, pat_prom
 
 def input_builder(form):
     complete_pat = dict()
