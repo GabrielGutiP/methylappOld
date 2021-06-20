@@ -1,8 +1,14 @@
 <html>
+    {% load static %}
     <head>
-        <h1>Welcome to MethylApp</h1>
+        <link rel="stylesheet" href="{% static 'css/result.css' %}">
     </head>
     <body>
+        <h1>Welcome to MethylApp
+        <img src="{% static 'images/logo.png' %}" alt="MethylApp logo" height="120px" width="120px"/>
+        </h1>
+        <p>{{message}}</p>
+        <p>{{val}}</p>
         <form method="POST" class="post-form" enctype="multipart/form-data">  
             {% csrf_token %}  
             <p>
@@ -92,8 +98,6 @@
             
             <button type="submit" class="save btn btn-default">Upload</button>  
         </form>  
-        <p>{{message}}</p>
-        <p>{{val}}</p>
         <button><a href="/">Reset</a></button> 
     </body>
 </html>
