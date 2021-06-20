@@ -1,9 +1,21 @@
 <html>
+    {% load static %}
     <head>
-        <h1>Welcome to MethylApp</h1>
+        <link rel="stylesheet" href="{% static 'css/main_page.css' %}">
     </head>
     <body>
-        <form method="POST" class="post-form" enctype="multipart/form-data">  
+        <div class="head">
+            <h1>Welcome to MethylApp</h1>
+            <img src="{% static 'images/logo.png' %}" alt="MethylApp logo" height="120px" width="120px"/>
+        </div>
+        <p>This application is designed to analyze the results obtained from SMRT (Single Molecule, RealTime) sequencing, the state-of-the-art technology for the detection of epigenetic marks by methylation in bacterial genomes. The final result of a SMRT sequencing is a coordinate file with the locations, type and contexts of methylations, this file is the main input of this application.</p>
+        <div class="errors">
+            <p>{{message}}</p>
+            <p>{{val}}</p>
+        </div>
+        <div class="loader" id="loader" hidden></div>
+        <form method="POST" class="post-form" enctype="multipart/form-data">
+            <div class="files">  
             {% csrf_token %}  
             <p>
                 <h2>{{ form.job_ID.label }}</h2>
@@ -17,13 +29,15 @@
                 <h2>{{ form.genome.label }}</h2>
                 {{ form.genome }}
                 <h2>{{ form.prom.label }}</h2>
+                <p>(Bases before the start codon)</p>
                 {{ form.prom }}
             </p>
             <p>
                 <h2>{{ form.gene.label }}</h2>
                 {{ form.gene }}
             </p>
-            <br><br>
+            </div>
+            <div class="patterns">
             <p>You must add also the complementary pattern.</p>
             <p>In complementary pattern position 0 means that the pattern is not methylated.</p>
             <p>If a autocomplementary pattern is added, it will be counted the position given in the first box.</p>
@@ -32,10 +46,10 @@
                     <tr>
                         <th>ID</th>
                         <th>Pattern</th>
-                        <th>Methylate base position</th>
+                        <th>Methylated base position</th>
                         <th><span style="padding-left:20px"></span></th>
                         <th>Complementary of pattern</th>
-                        <th>Methylate base position</th>
+                        <th>Methylated base position</th>
                     </tr>
                 </head>
                 <body>
@@ -90,10 +104,29 @@
                 </body>
             </table>
             
-            <button type="submit" class="save btn btn-default">Upload</button>  
+                <div class="btts">
+                    <button type="submit" class="button" onclick="loader(this.form)">
+                        <span class="button__text">Upload</span>
+                    </button>
+                    <button class="button">
+                        <a href="/">
+                            <span class="button__text">Reset</span>
+                        </a>
+                    </button>
+                </div>
+            </div>
         </form>  
-        <p>{{message}}</p>
-        <p>{{val}}</p>
-        <button><a href="/">Reset</a></button> 
     </body>
+
+    <script>
+        function loader(form) {
+            var x = document.getElementById("loader");
+            if (form.m_out.value === "" || form.genome.value === "" || form.gene.value === ""
+            || form.prom.value === "") {
+                x.style.display = "none";
+            } else {
+                x.style.display = "block";
+            }
+        }
+    </script>
 </html>
