@@ -65,3 +65,14 @@ def validate_comp_if_pattern(form):
             message= message+' - Invalid lone complementary pattern '+str(i)+'.'
         i=i+1
     return message
+
+def validate_one_patt(form):
+    message="- Include at least one pattern."
+    i = 1
+    while i <= 6:
+        pat = 'patron'+str(i)
+        if form.data[pat]:
+            message = "" 
+            break
+        i=i+1
+    return message
