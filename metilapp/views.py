@@ -1,6 +1,6 @@
-from .validators import validate_comp_if_pattern, validate_pos_in_compl_pat, validate_pos_in_pattern
+from .validators import validate_comp_if_pattern, validate_one_patt, validate_pos_in_compl_pat, validate_pos_in_pattern, validate_one_patt
 from .forms import MetilForm
-from .functions import delete_file, handle_uploaded_file, input_builder, methyl_type_stadistics, patterns_in_genome, read_fasta, read_file_gff, read_gene_gff, met_in_genes
+from .functions import delete_file, handle_uploaded_file, input_builder, methyl_type_stadistics, read_fasta, read_file_gff, read_gene_gff, met_in_genes
 from django.shortcuts import render
 
 def main_page(request):
@@ -9,7 +9,7 @@ def main_page(request):
 
     if request.method=='POST':
         form = MetilForm(request.POST, request.FILES)
-        validation = validate_pos_in_pattern(form) + validate_pos_in_compl_pat(form) + validate_comp_if_pattern(form)
+        validation = validate_pos_in_pattern(form) + validate_pos_in_compl_pat(form) + validate_comp_if_pattern(form) + validate_one_patt(form)
         if form.is_valid() and validation=="":
             f=request.FILES['m_out']
             g=request.FILES['genome']

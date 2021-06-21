@@ -194,8 +194,8 @@ def met_in_genes(gff, gene):
     return met_gen, met_prom, metGen, prom
 
 def patterns_in_genes(met_gen, met_prom, patt):
-    # Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met
-    # Cromosoma|Accession number|Parent|Product|Tipo gen|Coor. inicio|Coor. final|Cadena|Tipos de metilaciones(m4C, m6A...)|Total
+    # patt : Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met
+    # met_gen/met_prom : Cromosoma|Accession number|Parent|Product|Tipo gen|Coor. inicio|Coor. final|Cadena|Tipos de metilaciones(m4C, m6A...)|Total
     pat_gen = []    # Cromosoma|Tipo gen|Accession number|Parent|Description|Coor. init|Coor. fin|Cadena|Patron|MM|MN|NM|NN|... 
     pat_prom = []
     for g in met_gen:
@@ -210,7 +210,13 @@ def patterns_in_genes(met_gen, met_prom, patt):
                     stat[met[1]+'N_M'] = 0
                     stat[met[1]+'N_N'] = 0
                     dicc[met[1]] = [stat[met[1]+'M_M'],stat[met[1]+'M_N'],stat[met[1]+'N_M'],stat[met[1]+'N_N']]
-                if int(g[5])<=int(met[3])<=int(g[6]) or int(g[5])<=int(met[4])<=int(g[6]):
+                m = met[3]
+                m1 = met[4]
+                if m=="NA":
+                    m = -1
+                if m1=="NA":
+                    m1 = -1
+                if int(g[5])<=int(m)<=int(g[6]) or int(g[5])<=int(m1)<=int(g[6]):
                     total = total+1
                     if met[5] == 'M_M':
                         stat[met[1]+'M_M'] = stat[met[1]+'M_M']+1
@@ -235,7 +241,13 @@ def patterns_in_genes(met_gen, met_prom, patt):
                     stat[met[1]+'N_M'] = 0
                     stat[met[1]+'N_N'] = 0
                     dicc[met[1]] = [stat[met[1]+'M_M'],stat[met[1]+'M_N'],stat[met[1]+'N_M'],stat[met[1]+'N_N']]
-                if int(g[5])<=int(met[3])<=int(g[6]) or int(g[5])<=int(met[4])<=int(g[6]):
+                m = met[3]
+                m1 = met[4]
+                if m=="NA":
+                    m = -1
+                if m1=="NA":
+                    m1 = -1
+                if int(g[5])<=int(m)<=int(g[6]) or int(g[5])<=int(m1)<=int(g[6]):
                     total = total+1
                     if met[5] == 'M_M':
                         stat[met[1]+'M_M'] = stat[met[1]+'M_M']+1
