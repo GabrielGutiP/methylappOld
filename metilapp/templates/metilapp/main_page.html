@@ -16,93 +16,94 @@
         <div class="loader" id="loader" hidden></div>
         <form method="POST" class="post-form" enctype="multipart/form-data">
             <div class="files">  
-            {% csrf_token %}  
-            <p>
-                <h2>{{ form.job_ID.label }}</h2>
-                {{ form.job_ID }}
-            </p>
-            <p>
-                <h2>{{ form.m_out.label }}</h2>
-                {{ form.m_out }}
-            </p>
-            <p>
-                <h2>{{ form.genome.label }}</h2>
-                {{ form.genome }}
-                <h2>{{ form.prom.label }}</h2>
-                <p>(Bases before the start codon)</p>
-                {{ form.prom }}
-            </p>
-            <p>
-                <h2>{{ form.gene.label }}</h2>
-                {{ form.gene }}
-            </p>
+                {% csrf_token %}  
+                <p>
+                    <h2>{{ form.job_ID.label }}</h2>
+                    {{ form.job_ID }}
+                </p>
+                <p>
+                    <h2>{{ form.m_out.label }}</h2>
+                    {{ form.m_out }}
+                </p>
+                <p>
+                    <h2>{{ form.genome.label }}</h2>
+                    {{ form.genome }}
+                    <h2>{{ form.prom.label }}</h2>
+                    <p>(Bases before the start codon)</p>
+                    {{ form.prom }}
+                </p>
+                <p>
+                    <h2>{{ form.gene.label }}</h2>
+                    {{ form.gene }}
+                </p>
             </div>
             <div class="patterns">
-            <p>You must add also the complementary pattern.</p>
-            <p>In complementary pattern position 0 means that the pattern is not methylated.</p>
-            <p>If a autocomplementary pattern is added, it will be counted the position given in the first box.</p>
-            <table>
-                <head>
-                    <tr>
-                        <th>ID</th>
-                        <th>Pattern</th>
-                        <th>Methylated base position</th>
-                        <th><span style="padding-left:20px"></span></th>
-                        <th>Complementary of pattern</th>
-                        <th>Methylated base position</th>
-                    </tr>
-                </head>
-                <body>
-                    <tr>
-                        <td>1.</td>
-                        <td>{{ form.patron1 }}</td>
-                        <td>{{ form.pos_pat1 }}</td>
-                        <th></th>
-                        <td>{{ form.compl_pat1 }}</td>
-                        <td>{{ form.pos_compl_pat1 }}</td>
-                    </tr>
-                    <tr>
-                        <td>2.</td>
-                        <td>{{ form.patron2 }}</td>
-                        <td>{{ form.pos_pat2 }}</td>
-                        <th></th>
-                        <td>{{ form.compl_pat2 }}</td>
-                        <td>{{ form.pos_compl_pat2 }}</td>
-                    </tr>
-                    <tr>
-                        <td>3.</td>
-                        <td>{{ form.patron3 }}</td>
-                        <td>{{ form.pos_pat3 }}</td>
-                        <th></th>
-                        <td>{{ form.compl_pat3 }}</td>
-                        <td>{{ form.pos_compl_pat3 }}</td>
-                    </tr>
-                    <tr>
-                        <td>4.</td>
-                        <td>{{ form.patron4 }}</td>
-                        <td>{{ form.pos_pat4 }}</td>
-                        <th></th>
-                        <td>{{ form.compl_pat4 }}</td>
-                        <td>{{ form.pos_compl_pat4 }}</td>
-                    </tr>
-                    <tr>
-                        <td>5.</td>
-                        <td>{{ form.patron5 }}</td>
-                        <td>{{ form.pos_pat5 }}</td>
-                        <th></th>
-                        <td>{{ form.compl_pat5 }}</td>
-                        <td>{{ form.pos_compl_pat5 }}</td>
-                    </tr>
-                    <tr>
-                        <td>6.</td>
-                        <td>{{ form.patron6 }}</td>
-                        <td>{{ form.pos_pat6 }}</td>
-                        <th></th>
-                        <td>{{ form.compl_pat6 }}</td>
-                        <td>{{ form.pos_compl_pat6 }}</td>
-                    </tr>
-                </body>
-            </table>
+                <p>At least one pattern must be introduced.</p>
+                <p>For each pattern, it's complementary must be introduced.</p>
+                <p>In complementary pattern position 0 means that the pattern is not methylated.</p>
+            
+                <table>
+                    <head>
+                        <tr>
+                            <th>ID</th>
+                            <th>Pattern</th>
+                            <th>Methylated base position</th>
+                            <th><span style="padding-left:20px"></span></th>
+                            <th>Complementary of pattern</th>
+                            <th>Methylated base position</th>
+                        </tr>
+                    </head>
+                    <body>
+                        <tr>
+                            <td>1.</td>
+                            <td>{{ form.patron1 }}</td>
+                            <td>{{ form.pos_pat1 }}</td>
+                            <th></th>
+                            <td>{{ form.compl_pat1 }}</td>
+                            <td>{{ form.pos_compl_pat1 }}</td>
+                        </tr>
+                        <tr>
+                            <td>2.</td>
+                            <td>{{ form.patron2 }}</td>
+                            <td>{{ form.pos_pat2 }}</td>
+                            <th></th>
+                            <td>{{ form.compl_pat2 }}</td>
+                            <td>{{ form.pos_compl_pat2 }}</td>
+                        </tr>
+                        <tr>
+                            <td>3.</td>
+                            <td>{{ form.patron3 }}</td>
+                            <td>{{ form.pos_pat3 }}</td>
+                            <th></th>
+                            <td>{{ form.compl_pat3 }}</td>
+                            <td>{{ form.pos_compl_pat3 }}</td>
+                        </tr>
+                        <tr>
+                            <td>4.</td>
+                            <td>{{ form.patron4 }}</td>
+                            <td>{{ form.pos_pat4 }}</td>
+                            <th></th>
+                            <td>{{ form.compl_pat4 }}</td>
+                            <td>{{ form.pos_compl_pat4 }}</td>
+                        </tr>
+                        <tr>
+                            <td>5.</td>
+                            <td>{{ form.patron5 }}</td>
+                            <td>{{ form.pos_pat5 }}</td>
+                            <th></th>
+                            <td>{{ form.compl_pat5 }}</td>
+                            <td>{{ form.pos_compl_pat5 }}</td>
+                        </tr>
+                        <tr>
+                            <td>6.</td>
+                            <td>{{ form.patron6 }}</td>
+                            <td>{{ form.pos_pat6 }}</td>
+                            <th></th>
+                            <td>{{ form.compl_pat6 }}</td>
+                            <td>{{ form.pos_compl_pat6 }}</td>
+                        </tr>
+                    </body>
+                </table>
             
                 <div class="btts">
                     <button type="submit" class="button" onclick="loader(this.form)">
