@@ -5,21 +5,43 @@
     </head>
 {% block content %}
     <body>
+        <button class="button">
+            <a href="/">
+                <span class="button__text">Back</span>
+            </a>
+        </button>
         <h1>Results from: {{jobID}}</h1>
-    
-        <div class="tabs">
-            <div class="tab-2">
-                <label for="tab2-1">General summary</label>
-                <input id="tab2-1" name="tabs-two" type="radio" checked="checked">
-                <div>
+        <div class="warpper">
+            <input class="radio" id="one" name="group" type="radio" checked>
+            <input class="radio" id="two" name="group" type="radio">
+            <input class="radio" id="three" name="group" type="radio">
+            <input class="radio" id="four" name="group" type="radio">
+            <input class="radio" id="five" name="group" type="radio">
+            <input class="radio" id="six" name="group" type="radio">
+            <input class="radio" id="seven" name="group" type="radio">
+            <input class="radio" id="eight" name="group" type="radio">
+            <input class="radio" id="nine" name="group" type="radio">
+            <div class="tabs">
+                <label class="tab" id="one-tab" for="one">General summary</label>
+                <label class="tab" id="two-tab" for="two">Genome pattern distribution</label>
+                <label class="tab" id="three-tab" for="three">Methylation status</label>
+                <label class="tab" id="four-tab" for="four">Methylations in genes</label>
+                <label class="tab" id="five-tab" for="five">Methylations in promoters</label>
+                <label class="tab" id="six-tab" for="six">Gen for methylations</label>
+                <label class="tab" id="seven-tab" for="seven">Promoter for methylations</label>
+                <label class="tab" id="eight-tab" for="eight">Patterns in genes</label>
+                <label class="tab" id="nine-tab" for="nine">Patterns in promoters</label>
+            </div>
+            <div class="panels">
+                <div class="panel" id="one-panel">
+                    <div class="panel-title">General summary</div>
+                    
                     <p>SMRT Methylation Output (.gff): {{ met_name }}</p>
                     <p>Genome file (.fasta): {{ fasta_name }}</p>
                     <p>Genome anotation file (.gff): {{ gene_name }}</p>
-
                     <br><br>
-
                     <h2>SMRT Methylation Output (.gff) Summary:</h2>
-                
+              
                     <table class="table table-striped">
                         {% for key, value in chrom_m %}
                         <thead>
@@ -44,9 +66,8 @@
                         </tbody>
                         {% endfor %}
                     </table>
-                
                     <br><br>
-                
+              
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -64,12 +85,10 @@
                         </tbody>
                     </table>
                 </div>
-            </div>
-            <div class="tab-2">
-                <label for="tab2-2">Genome pattern distribution Summary</label>
-                <input id="tab2-2" name="tabs-two" type="radio">
                 
-                <div>
+
+                <div class="panel" id="two-panel">
+                    <div class="panel-title">Genome pattern distribution</div>
                     <h2>Genome pattern distribution Summary:</h2>
                     <table>
                         <head>
@@ -87,9 +106,7 @@
                             {% endfor%}
                         </body>
                     </table>
-            
                     <br><br>
-            
                     <table>
                         <head>
                             <tr>
@@ -124,16 +141,10 @@
                             {% endfor %}
                         </body>
                     </table>
-            
-                    <br><br>
                 </div>
-            </div>
 
-            <div class="tab-2">
-                <label for="tab2-3">Methylation status</label>
-                <input id="tab2-3" name="tabs-two" type="radio">
-
-                <div>
+                <div class="panel" id="three-panel">
+                    <div class="panel-title">Methylation status</div>
                     <h2>Methylation status</h2>
                     <table>
                         <head>
@@ -162,261 +173,260 @@
                         </body>
                     </table>
                 </div>
-            </div>
+                
+                <div class="panel" id="four-panel">
+                    <div class="panel-title">Methylations in genes</div>
+                    <h3>Metilations in genes</h3>
+                    <table>
+                        <head>
+                            <tr>
+                                <th>Chromosome</th>
+                                <th>Accession number</th>
+                                <th>Gen</th>
+                                <th>Description</th>
+                                <th>Feature</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Strand</th>
+                                <th>m4C</th>
+                                <th>m6A</th>
+                                <th>m5C</th>
+                                <th>Total</th>
+                            </tr>
+                        </head>
+                        <body>
+                            {% for k in metGen %}
+                            <tr>
+                                <td>{{ k.0 }}</td>
+                                <td>{{ k.1 }}</td>
+                                <td>{{ k.2 }}</td>
+                                <td>{{ k.3 }}</td>
+                                <td>{{ k.4 }}</td>
+                                <td>{{ k.5 }}</td>
+                                <td>{{ k.6 }}</td>
+                                <td>{{ k.7 }}</td>
+                                <td>{{ k.8 }}</td>
+                                <td>{{ k.9 }}</td>
+                                <td>{{ k.10 }}</td>
+                                <td>{{ k.11 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </body>
+                    </table>
+                </div>
+                    
+                <div class="panel" id="five-panel">
+                    <div class="panel-title">Methylations in promoters</div>    
+                    <h3>Metilations in promoters</h3>
+                    <table>
+                        <head>
+                            <tr>
+                                <th>Chromosome</th>
+                                <th>Accession number</th>
+                                <th>Gen</th>
+                                <th>Description</th>
+                                <th>Feature</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Strand</th>
+                                <th>m4C</th>
+                                <th>m6A</th>
+                                <th>m5C</th>
+                                <th>Total</th>
+                            </tr>
+                        </head>
+                        <body>
+                            {% for k in metProm %}
+                            <tr>
+                                <td>{{ k.0 }}</td>
+                                <td>{{ k.1 }}</td>
+                                <td>{{ k.2 }}</td>
+                                <td>{{ k.3 }}</td>
+                                <td>{{ k.4 }}</td>
+                                <td>{{ k.5 }}</td>
+                                <td>{{ k.6 }}</td>
+                                <td>{{ k.7 }}</td>
+                                <td>{{ k.8 }}</td>
+                                <td>{{ k.9 }}</td>
+                                <td>{{ k.10 }}</td>
+                                <td>{{ k.11 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </body>
+                    </table>
+                </div>
+                
+                <div class="panel" id="six-panel">
+                    <div class="panel-title">Gen for methylations</div>  
+                    <h3>Each metilations asociated gen</h3>
+                    <table>
+                        <head>
+                            <tr>
+                                <th>Chromosome</th>
+                                <th>Met. type</th>
+                                <th>Coor. met.</th>
+                                <th>Feature</th>
+                                <th>Gen</th>
+                                <th>Description</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Gen strand</th>
+                                <th>Met. strand</th>
+                            </tr>
+                        </head>
+                        <body>
+                            {% for v, k in genMets %}
+                            <tr>
+                                <td>{{ k.0 }}</td>
+                                <td>{{ k.1 }}</td>
+                                <td>{{ k.2 }}</td>
+                                <td>{{ k.3 }}</td>
+                                <td>{{ k.4 }}</td>
+                                <td>{{ k.5 }}</td>
+                                <td>{{ k.6 }}</td>
+                                <td>{{ k.7 }}</td>
+                                <td>{{ k.8 }}</td>
+                                <td>{{ k.9 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </body>
+                    </table>
+                </div>
+                
+                <div class="panel" id="seven-panel">
+                    <div class="panel-title">Promoter for methylations</div>  
+                    <h3>Each metilations asociated promoters</h3>
+                    <table>
+                        <head>
+                            <tr>
+                                <th>Chromosome</th>
+                                <th>Met. type</th>
+                                <th>Coor. met.</th>
+                                <th>Feature</th>
+                                <th>Gen</th>
+                                <th>Description</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Gen strand</th>
+                                <th>Met. strand</th>
+                            </tr>
+                        </head>
+                        <body>
+                            {% for v, k in promMets %}
+                            <tr>
+                                <td>{{ k.0 }}</td>
+                                <td>{{ k.1 }}</td>
+                                <td>{{ k.2 }}</td>
+                                <td>{{ k.3 }}</td>
+                                <td>{{ k.4 }}</td>
+                                <td>{{ k.5 }}</td>
+                                <td>{{ k.6 }}</td>
+                                <td>{{ k.7 }}</td>
+                                <td>{{ k.8 }}</td>
+                                <td>{{ k.9 }}</td>
+                            </tr>
+                            {% endfor %}
+                        </body>
+                    </table>
+                </div>
 
-            <div class="tab-2">
-                <label for="tab2-4">Genome anotation summary</label>
-                <input id="tab2-4" name="tabs-two" type="radio">
-
-                <div class="tab-2">
-                    <label for="tab2-5">Metilations in genes</label>
-                    <input id="tab2-5" name="tabs-two" type="radio">
-
-                        <div>
-                            <h3>Metilations in genes</h3>
-                            
-                            <table>
-                                <head>
-                                    <tr>
-                                        <th>Chromosome</th>
-                                        <th>Accession number</th>
-                                        <th>Gen</th>
-                                        <th>Description</th>
-                                        <th>Feature</th>
-                                        <th>Start</th>
-                                        <th>End</th>
-                                        <th>Strand</th>
-                                        <th>m4C</th>
-                                        <th>m6A</th>
-                                        <th>m5C</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </head>
-                                <body>
-                                    {% for k in metGen %}
-                                    <tr>
-                                        <td>{{ k.0 }}</td>
-                                        <td>{{ k.1 }}</td>
-                                        <td>{{ k.2 }}</td>
-                                        <td>{{ k.3 }}</td>
-                                        <td>{{ k.4 }}</td>
-                                        <td>{{ k.5 }}</td>
-                                        <td>{{ k.6 }}</td>
-                                        <td>{{ k.7 }}</td>
-                                        <td>{{ k.8 }}</td>
-                                        <td>{{ k.9 }}</td>
-                                        <td>{{ k.10 }}</td>
-                                        <td>{{ k.11 }}</td>
-                                    </tr>
+                <div class="panel" id="eight-panel">
+                    <div class="panel-title">Patterns in genes</div>  
+                    <h3>Patterns in gen</h3>
+                    <table>
+                        <head>
+                            <tr>
+                                <th>Chromosome</th>
+                                <th>Feature</th>
+                                <th>Accession number</th>
+                                <th>Gen</th>
+                                <th>Description</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Strand</th>
+                                <th>Total</th>
+                                {% for v, k in pattGen.0.9 %}
+                                    <th>{{ v }}</th>
+                                    <th>M_M</th>
+                                    <th>M_N</th>
+                                    <th>N_M</th>
+                                    <th>N_N</th>
+                                {% endfor %}
+                            </tr>
+                        </head>
+                        <body>
+                        {% for k in pattGen %}
+                            <tr>
+                                <td>{{ k.0 }}</td>
+                                <td>{{ k.1 }}</td>
+                                <td>{{ k.2 }}</td>
+                                <td>{{ k.3 }}</td>
+                                <td>{{ k.4 }}</td>
+                                <td>{{ k.5 }}</td>
+                                <td>{{ k.6 }}</td>
+                                <td>{{ k.7 }}</td>
+                                <td>{{ k.8 }}</td>
+                                {% for v, i in k.9 %}
+                                    <td>{{ v }}</td>
+                                    {% for k in i %}
+                                        <td>{{ k }}</td>
                                     {% endfor %}
-                                </body>
-                            </table>
-                        </div>
-                    </div>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </body>
+                    </table>
+                </div>
 
-                    <div class="tab.2">
-                        <label for="tab2-6">Metilations in promoters</label>
-                        <input id="tab2-6" name="tabs-two" type="radio">
-                        
-                        <div>
-                            <h3>Metilations in promoters</h3>
-                            <table>
-                                <head>
-                                    <tr>
-                                        <th>Chromosome</th>
-                                        <th>Accession number</th>
-                                        <th>Gen</th>
-                                        <th>Description</th>
-                                        <th>Feature</th>
-                                        <th>Start</th>
-                                        <th>End</th>
-                                        <th>Strand</th>
-                                        <th>m4C</th>
-                                        <th>m6A</th>
-                                        <th>m5C</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </head>
-                                <body>
-                                    {% for k in metProm %}
-                                    <tr>
-                                        <td>{{ k.0 }}</td>
-                                        <td>{{ k.1 }}</td>
-                                        <td>{{ k.2 }}</td>
-                                        <td>{{ k.3 }}</td>
-                                        <td>{{ k.4 }}</td>
-                                        <td>{{ k.5 }}</td>
-                                        <td>{{ k.6 }}</td>
-                                        <td>{{ k.7 }}</td>
-                                        <td>{{ k.8 }}</td>
-                                        <td>{{ k.9 }}</td>
-                                        <td>{{ k.10 }}</td>
-                                        <td>{{ k.11 }}</td>
-                                    </tr>
+                <div class="panel" id="nine-panel">
+                    <div class="panel-title">Promoters in promoters</div>    
+                    <h3>Patterns in promoters</h3>
+                    <table>
+                        <head>
+                            <tr>
+                                <th>Chromosome</th>
+                                <th>Feature</th>
+                                <th>Accession number</th>
+                                <th>Gen</th>
+                                <th>Description</th>
+                                <th>Start</th>
+                                <th>End</th>
+                                <th>Strand</th>
+                                <th>Total</th>
+                                {% for v, k in pattGen.0.9 %}
+                                    <th>{{ v }}</th>
+                                    <th>M_M</th>
+                                    <th>M_N</th>
+                                    <th>N_M</th>
+                                    <th>N_N</th>
+                                {% endfor %}
+                            </tr>
+                        </head>
+                        <body>
+                        {% for k in pattGen %}
+                            <tr>
+                                <td>{{ k.0 }}</td>
+                                <td>{{ k.1 }}</td>
+                                <td>{{ k.2 }}</td>
+                                <td>{{ k.3 }}</td>
+                                <td>{{ k.4 }}</td>
+                                <td>{{ k.5 }}</td>
+                                <td>{{ k.6 }}</td>
+                                <td>{{ k.7 }}</td>
+                                <td>{{ k.8 }}</td>
+                                {% for v, i in k.9 %}
+                                    <td>{{ v }}</td>
+                                    {% for k in i %}
+                                        <td>{{ k }}</td>
                                     {% endfor %}
-                                </body>
-                            </table>
-                        </div>
-                    </div>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </body>
+                    </table>
                 </div>
             </div>
-            <h3>Each metilations asociated gen</h3>
-            <table>
-                <head>
-                    <tr>
-                        <th>Chromosome</th>
-                        <th>Met. type</th>
-                        <th>Coor. met.</th>
-                        <th>Feature</th>
-                        <th>Gen</th>
-                        <th>Description</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Gen strand</th>
-                        <th>Met. strand</th>
-                    </tr>
-                </head>
-                <body>
-                    {% for v, k in genMets %}
-                    <tr>
-                        <td>{{ k.0 }}</td>
-                        <td>{{ k.1 }}</td>
-                        <td>{{ k.2 }}</td>
-                        <td>{{ k.3 }}</td>
-                        <td>{{ k.4 }}</td>
-                        <td>{{ k.5 }}</td>
-                        <td>{{ k.6 }}</td>
-                        <td>{{ k.7 }}</td>
-                        <td>{{ k.8 }}</td>
-                        <td>{{ k.9 }}</td>
-                    </tr>
-                    {% endfor %}
-                </body>
-            </table>
-            <h3>Each metilations asociated promoters</h3>
-            <table>
-                <head>
-                    <tr>
-                        <th>Chromosome</th>
-                        <th>Met. type</th>
-                        <th>Coor. met.</th>
-                        <th>Feature</th>
-                        <th>Gen</th>
-                        <th>Description</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Gen strand</th>
-                        <th>Met. strand</th>
-                    </tr>
-                </head>
-                <body>
-                    {% for v, k in promMets %}
-                    <tr>
-                        <td>{{ k.0 }}</td>
-                        <td>{{ k.1 }}</td>
-                        <td>{{ k.2 }}</td>
-                        <td>{{ k.3 }}</td>
-                        <td>{{ k.4 }}</td>
-                        <td>{{ k.5 }}</td>
-                        <td>{{ k.6 }}</td>
-                        <td>{{ k.7 }}</td>
-                        <td>{{ k.8 }}</td>
-                        <td>{{ k.9 }}</td>
-                    </tr>
-                    {% endfor %}
-                </body>
-            </table>
-            <br><br>
-            <h3>Patterns in gen</h3>
-            <table>
-                <head>
-                    <tr>
-                        <th>Chromosome</th>
-                        <th>Feature</th>
-                        <th>Accession number</th>
-                        <th>Gen</th>
-                        <th>Description</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Strand</th>
-                        <th>Total</th>
-                        {% for v, k in pattGen.0.9 %}
-                        <th>{{ v }}</th>
-                        <th>M_M</th>
-                        <th>M_N</th>
-                        <th>N_M</th>
-                        <th>N_N</th>
-                        {% endfor %}
-                    </tr>
-                </head>
-                <body>
-                    {% for k in pattGen %}
-                    <tr>
-                        <td>{{ k.0 }}</td>
-                        <td>{{ k.1 }}</td>
-                        <td>{{ k.2 }}</td>
-                        <td>{{ k.3 }}</td>
-                        <td>{{ k.4 }}</td>
-                        <td>{{ k.5 }}</td>
-                        <td>{{ k.6 }}</td>
-                        <td>{{ k.7 }}</td>
-                        <td>{{ k.8 }}</td>
-                        {% for v, i in k.9 %}
-                        <td>{{ v }}</td>
-                            {% for k in i %}
-                            <td>{{ k }}</td>
-                            {% endfor %}
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </body>
-            </table>
-            <h3>Patterns in promoters</h3>
-            <table>
-                <head>
-                    <tr>
-                        <th>Chromosome</th>
-                        <th>Feature</th>
-                        <th>Accession number</th>
-                        <th>Gen</th>
-                        <th>Description</th>
-                        <th>Start</th>
-                        <th>End</th>
-                        <th>Strand</th>
-                        <th>Total</th>
-                        {% for v, k in pattGen.0.9 %}
-                        <th>{{ v }}</th>
-                        <th>M_M</th>
-                        <th>M_N</th>
-                        <th>N_M</th>
-                        <th>N_N</th>
-                        {% endfor %}
-                    </tr>
-                </head>
-                <body>
-                    {% for k in pattGen %}
-                    <tr>
-                        <td>{{ k.0 }}</td>
-                        <td>{{ k.1 }}</td>
-                        <td>{{ k.2 }}</td>
-                        <td>{{ k.3 }}</td>
-                        <td>{{ k.4 }}</td>
-                        <td>{{ k.5 }}</td>
-                        <td>{{ k.6 }}</td>
-                        <td>{{ k.7 }}</td>
-                        <td>{{ k.8 }}</td>
-                        {% for v, i in k.9 %}
-                        <td>{{ v }}</td>
-                            {% for k in i %}
-                            <td>{{ k }}</td>
-                            {% endfor %}
-                        {% endfor %}
-                    </tr>
-                    {% endfor %}
-                </body>
-            </table>
-        </div>
-        <button><a href="/">Back</a></button>    
+        </div>  
     </body>
 {% endblock %}
 </html>
