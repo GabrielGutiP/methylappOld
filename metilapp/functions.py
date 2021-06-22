@@ -15,7 +15,7 @@ def delete_file(f):
         os.remove('./metilapp/'+f.name)
         return ""
     else:
-        return f+"does not exist\n"  
+        return f.name+"does not exist\n"  
 
 def delete_fasta(f):
     if os.path.exists(f):
@@ -23,7 +23,7 @@ def delete_fasta(f):
         os.remove(f+".fai")
         return ""
     else:
-        return f+"does not exist"  
+        return f.name+"does not exist"  
 
 def read_file_gff(f_name):
     result = []
