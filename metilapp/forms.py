@@ -1,12 +1,12 @@
 # -*- encoding: utf-8 -*-
 from django import forms
 from django.forms.fields import IntegerField
-from .validators import validate_file_extension, validate_genome_extension, validate_pat_IUPAC, validate_pos_compl, validate_pos_pat
+from .validators import validate_smrt_extension, validate_gene_extension, validate_genome_extension, validate_pat_IUPAC, validate_pos_compl, validate_pos_pat
 
 class MetilForm(forms.Form):
-     m_out = forms.FileField(label="SMRT Methylation Output (.gff)", validators=[validate_file_extension])
+     m_out = forms.FileField(label="SMRT Methylation Output (.gff)", validators=[validate_smrt_extension])
      genome = forms.FileField(label="Genome file Fasta Format (.fasta)", validators=[validate_genome_extension])
-     gene = forms.FileField(label="Genome anotation file (.gff)", validators=[validate_file_extension])
+     gene = forms.FileField(label="Genome annotation file (.gff)", validators=[validate_gene_extension])
      job_ID = forms.CharField(label="Job ID" , required=False)
 
      prom = forms.IntegerField(label="Promoter region", validators=[validate_pos_compl])
