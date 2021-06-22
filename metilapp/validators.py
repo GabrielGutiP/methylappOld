@@ -1,17 +1,23 @@
 import os
 from django.core.exceptions import ValidationError
 
-def validate_file_extension(value):
+def validate_smrt_extension(value):
     ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
     valid_extensions = ['.gff']
     if not ext.lower() in valid_extensions:
-        raise ValidationError('Unsupported file extension.')
+        raise ValidationError('Unsupported file extension for SMRT file.')
+
+def validate_gene_extension(value):
+    ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
+    valid_extensions = ['.gff']
+    if not ext.lower() in valid_extensions:
+        raise ValidationError('Unsupported file extension for genome annotation file.')
 
 def validate_genome_extension(value):
     ext = os.path.splitext(value.name)[1]  # [0] returns path+filename
     valid_extensions = ['.fasta']
     if not ext.lower() in valid_extensions:
-        raise ValidationError('Unsupported file extension.')
+        raise ValidationError('Unsupported file extension genome secuence file.')
 
 def validate_pos_pat(value):
     if value <= 0:
@@ -63,5 +69,16 @@ def validate_comp_if_pattern(form):
         pat = 'patron'+str(i)
         if form.data[aux] and not form.data[pat]: 
             message= message+' - Invalid lone complementary pattern '+str(i)+'.'
+        i=i+1
+    return message
+
+def validate_one_patt(form):
+    message="- Include at least one pattern."
+    i = 1
+    while i <= 6:
+        pat = 'patron'+str(i)
+        if form.data[pat]:
+            message = "" 
+            break
         i=i+1
     return message
