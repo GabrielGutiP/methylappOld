@@ -158,8 +158,11 @@ def met_pat_opt(gff, index_complete):
             elif aux=="N_N":
                 c_NN = c_NN+1
             result.append([i[0], i[1], s+1, pos_posit, pos_neg, aux, t_met])    # Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met
-        num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2), 
-            round(100*(int(c_NN)/int(i[3])), 2), i[1]])
+        if(i[3]!=0):
+            num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2), 
+                round(100*(int(c_NN)/int(i[3])), 2), i[1]])
+        else:
+            num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], i[3], i[3], i[3], i[3], i[1]])
     return result, num_st
 
 def met_in_genes(gff, gene):
