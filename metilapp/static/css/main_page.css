@@ -21,9 +21,11 @@ body {
 .errors{
     color: red
 }
+
 .btts{
-    clear: both;
+    clear:both
 }
+
 .files{
     float: left;
 }

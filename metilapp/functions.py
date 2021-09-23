@@ -13,15 +13,17 @@ def handle_uploaded_file(f):
 def delete_file(f):
     if os.path.exists('./metilapp/'+f.name):
         os.remove('./metilapp/'+f.name)
+        return ""
     else:
-        print(f+"does not exist")  
+        return f.name+"does not exist\n"  
 
 def delete_fasta(f):
     if os.path.exists(f):
         os.remove(f)
         os.remove(f+".fai")
+        return ""
     else:
-        print(f+"does not exist")  
+        return f.name+"does not exist"  
 
 def read_file_gff(f_name):
     result = []
