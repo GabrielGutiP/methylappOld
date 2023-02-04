@@ -32,7 +32,29 @@ def read_file_gff(f_name):
         for row in reader:
             if not row[0].startswith('#'):
                 if row[2]!="modified_base":
-                    aux = [row[0].split()[0], row[2], int(row[3]), row[6], row[8].split(";")[1].split("=")[1]]
+                    cov = "NA"
+                    context = "NA"
+                    ipdratio = "NA"
+                    frac = "NA"
+                    frac_low = "NA"
+                    frac_up = "NA"
+                    idqv = "NA"
+                    for r in row[8].split(";"):
+                        if r.startswith('coverage'):
+                            cov=r.split("=")[1]
+                        elif r.startswith('context'):
+                            context=r.split("=")[1]
+                        elif r.startswith('IPDRatio'):
+                            ipdratio=r.split("=")[1]
+                        elif r.startswith('fracLow'):
+                            frac_low=r.split("=")[1]
+                        elif r.startswith('fracUp'):
+                            frac_up=r.split("=")[1]
+                        elif r.startswith('frac'):
+                            frac=r.split("=")[1]
+                        elif r.startswith('identificationQv'):
+                            idqv=r.split("=")[1]                   
+                    aux = [row[0].split()[0], row[2], int(row[3]), row[6], context, row[5], cov, ipdratio, frac, frac_low, frac_up, idqv]
                     result.append(aux)
     file.close()
     return result
@@ -103,7 +125,7 @@ def met_pat_opt(gff, index_complete):
     met = dict()
     num_st = []
     for row in gff:
-        met[row[2]]= row[1]
+        met[row[2]]= [row[1], row[5], row[6], row[7], row[8], row[9], row[10], row[11]] # met, score, coverage, ipdratio, frac, frac_low, frac_up, idqv
     for i in index_complete.values():
         c_MM = 0
         c_MN = 0
@@ -115,42 +137,112 @@ def met_pat_opt(gff, index_complete):
                 pos_posit = s+int(i[4][0])
                 pos_neg = s+1+len(aux_p[0])-int(i[4][1])
                 if int(i[4][0])!=0 and pos_posit in met.keys():
-                    t_met = met[pos_posit]                  # Tipo de metilación (m6A...)
+                    t_met = met[pos_posit][0]                  # Tipo de metilación (m6A...)
                     aux = "M_"
+                    sc_pos = met[pos_posit][1]
+                    cov_pos = met[pos_posit][2]
+                    ipd_pos = met[pos_posit][3]
+                    frac_pos = met[pos_posit][4]
+                    frac_low_pos = met[pos_posit][5]
+                    frac_up_pos = met[pos_posit][6]
+                    idqv_pos = met[pos_posit][7]
                 elif int(i[4][0])==0:
                     t_met = "None"
                     aux = "N_"
                     pos_posit = "NA"
+                    sc_pos = "NA"
+                    cov_pos = "NA"
+                    ipd_pos = "NA"
+                    frac_pos = "NA"
+                    frac_low_pos = "NA"
+                    frac_up_pos = "NA"
+                    idqv_pos = "NA"
                 else:
                     t_met = "None"
                     aux = "N_"
+                    sc_pos = "NA"
+                    cov_pos = "NA"
+                    ipd_pos = "NA"
+                    frac_pos = "NA"
+                    frac_low_pos = "NA"
+                    frac_up_pos = "NA"
+                    idqv_pos = "NA"
                 if int(i[4][1])!=0 and pos_neg in met.keys():
-                    t_met = met[pos_neg]
+                    t_met = met[pos_neg][0]
                     aux = aux+"M"
+                    sc_neg = met[pos_neg][1]
+                    cov_neg = met[pos_posit][2]
+                    ipd_neg = met[pos_posit][3]
+                    frac_neg = met[pos_posit][4]
+                    frac_low_neg = met[pos_posit][5]
+                    frac_up_neg = met[pos_posit][6]
+                    idqv_neg = met[pos_posit][7]
                 elif int(i[4][1])==0:
                     if t_met=="None":
                         t_met = "None"
                     aux = aux+"N"
                     pos_neg = "NA"
+                    sc_neg = "NA"
+                    cov_neg = "NA"
+                    ipd_neg = "NA"
+                    frac_neg = "NA"
+                    frac_low_neg = "NA"
+                    frac_up_neg = "NA"
+                    idqv_neg = "NA"
                 else:
                     if t_met=="None":
                         t_met = "None"
                     aux = aux+"N"
+                    sc_neg = "NA"
+                    cov_neg = "NA"
+                    ipd_neg = "NA"
+                    frac_neg = "NA"
+                    frac_low_neg = "NA"
+                    frac_up_neg = "NA"
+                    idqv_neg = "NA"
             else:
                 pos_posit = s+int(i[4])
                 pos_neg = s+1+len(aux_p[0])-int(i[4])
                 if pos_posit in met.keys():
-                    t_met = met[pos_posit]
+                    t_met = met[pos_posit][0]
                     aux = "M_"
+                    sc_pos = met[pos_posit][1]
+                    cov_pos = met[pos_posit][2]
+                    ipd_pos = met[pos_posit][3]
+                    frac_pos = met[pos_posit][4]
+                    frac_low_pos = met[pos_posit][5]
+                    frac_up_pos = met[pos_posit][6]
+                    idqv_pos = met[pos_posit][7]
                 else:
                     t_met = "None"
                     aux = "N_"
+                    sc_pos = "NA"
+                    cov_pos = "NA"
+                    ipd_pos = "NA"
+                    frac_pos = "NA"
+                    frac_low_pos = "NA"
+                    frac_up_pos = "NA"
+                    idqv_pos = "NA"
                 if pos_neg in met.keys():
-                    t_met = met[pos_neg]
+                    t_met = met[pos_neg][0]
                     aux = aux+"M"
+                    sc_neg = met[pos_neg][1]
+                    cov_neg = met[pos_posit][2]
+                    ipd_neg = met[pos_posit][3]
+                    frac_neg = met[pos_posit][4]
+                    frac_low_neg = met[pos_posit][5]
+                    frac_up_neg = met[pos_posit][6]
+                    idqv_neg = met[pos_posit][7]
                 else:
                     t_met = "None"
                     aux = aux+"N"
+                    sc_neg = "NA"
+                    cov_neg = "NA"
+                    ipd_neg = "NA"
+                    frac_neg = "NA"
+                    frac_low_neg = "NA"
+                    frac_up_neg = "NA"
+                    idqv_neg = "NA"
             if aux=="M_M":
                 c_MM = c_MM+1
             elif aux=="M_N":
@@ -159,7 +251,10 @@ def met_pat_opt(gff, index_complete):
                 c_NM = c_NM+1
             elif aux=="N_N":
                 c_NN = c_NN+1
-            result.append([i[0], i[1], s+1, pos_posit, pos_neg, aux, t_met])    # Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met
+            result.append([i[0], i[1], s+1, pos_posit, pos_neg, aux, t_met, sc_pos, cov_pos, ipd_pos,
+                            frac_pos, frac_low_pos, frac_up_pos, idqv_pos, sc_neg, cov_neg, ipd_neg,
+                            frac_neg, frac_low_neg, frac_up_neg, idqv_neg])    # Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met|Score
+            
         num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2), 
             round(100*(int(c_NN)/int(i[3])), 2), i[1]])
     return result, num_st
@@ -178,17 +273,17 @@ def met_in_genes(gff, gene):
                 if int(g[2][0]) <= int(row[2]) <= int(g[2][1]):
                     met[row[2]] = row[1]
                     if not row[0]+"-"+str(row[2]) in metGen.keys() or metGen[row[0]+"-"+str(row[2])][3] == "NA":
-                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[2][0], g[2][1], g[4], row[3], g[5][0]]
+                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[2][0], g[2][1], g[4], row[3], g[5][0], row[5], row[6], row[7], row[8], row[9], row[10], row[11]]
                 else:
                     if not row[0]+"-"+str(row[2]) in metGen.keys():
-                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3], g[5][0]]
+                        metGen[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3], g[5][0], row[5], row[6], row[7], row[8], row[9], row[10], row[11]]
                 if int(g[3][0]) <= int(row[2]) <= int(g[3][1]):
                     metP[row[2]] = row[1]
                     if not row[0]+"-"+str(row[2]) in prom.keys() or prom[row[0]+"-"+str(row[2])][3] == "NA":
-                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[3][0], g[3][1], g[4], row[3], g[5][0]]
+                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], g[1], g[5][1], g[5][2], g[3][0], g[3][1], g[4], row[3], g[5][0], row[5], row[6], row[7], row[8], row[9], row[10], row[11]]
                 else:
                     if not row[0]+"-"+str(row[2]) in prom.keys():
-                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3], g[5][0]]
+                        prom[row[0]+"-"+str(row[2])] = [row[0], row[1], row[2], "NA", "NA", "NA", "NA", "NA", "NA", row[3], g[5][0], row[5], row[6], row[7], row[8], row[9], row[10], row[11]]
         aux = Counter(met.values())
         aux_p = Counter(metP.values())
         met_gen.append([g[0], g[5][0], g[5][1], g[5][2], g[1], g[2][0], g[2][1], g[4], aux["m4C"], aux["m6A"], aux["m5C"], len(met.keys())])
