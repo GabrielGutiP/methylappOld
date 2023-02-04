@@ -131,12 +131,13 @@ def main_page(request):
                     # Methylation status
                     sheet3 = workbook.add_worksheet('Methylation status')
                     i=1
-                    table = 'A'+str(i)+':'+'G'+str(i+len(data_fasta[1][0]))
+                    table = 'A'+str(i)+':'+'U'+str(i+len(data_fasta[1][0]))
                     met_count = list()
                     for aux in data_fasta[1][0]:
-                        order = [0,1,6,2,3,4,5]
+                        order = [0,1,6,2,3,4,5,7,8,9,10,11,12,13,14,15,16,17,18,19,20]
                         v=[aux[j] for j in order]
                         met_count.append(v)
+                    
                     sheet3.add_table(table, {'data': met_count,
                                 'columns': [{'header': 'Chromosome'},
                                             {'header': 'Pattern'},
@@ -145,6 +146,20 @@ def main_page(request):
                                             {'header': 'Putative coor. in W'},
                                             {'header': 'Putative coor. in C'},
                                             {'header': 'Status'},
+                                            {'header': 'Score coor. W'},
+                                            {'header': 'Coverage W'},
+                                            {'header': 'IPDRatio W'},
+                                            {'header': 'Frac. W'},
+                                            {'header': 'Frac. low W'},
+                                            {'header': 'Frac. up W'},
+                                            {'header': 'IdentificationQv W'},
+                                            {'header': 'Score coor. C'},
+                                            {'header': 'Coverage C'},
+                                            {'header': 'IPDRatio C'},
+                                            {'header': 'Frac. C'},
+                                            {'header': 'Frac. low C'},
+                                            {'header': 'Frac. up C'},
+                                            {'header': 'IdentificationQv C'},
                                             ]})
                     sheet3.autofit()
 
@@ -194,7 +209,7 @@ def main_page(request):
                     for j, k in data_metGen[2].items():
                         v.append(k)
                     i=1
-                    table = 'A'+str(i)+':'+'J'+str(i+len(v))
+                    table = 'A'+str(i)+':'+'R'+str(i+len(v))
                     sheet6.add_table(table, {'data': v,
                                 'columns': [{'header': 'Chromosome'},
                                             {'header': 'Met. type'},
@@ -206,6 +221,14 @@ def main_page(request):
                                             {'header': 'End'},
                                             {'header': 'Gene strand'},
                                             {'header': 'Met. strand'},
+                                            {'header': 'Accession number'},
+                                            {'header': 'Score'},
+                                            {'header': 'Coverage'},
+                                            {'header': 'IPDRatio'},
+                                            {'header': 'Frac.'},
+                                            {'header': 'Frac. low'},
+                                            {'header': 'Frac. up'},
+                                            {'header': 'IdentificationQv'},
                                             ]})
                     sheet6.autofit()
 
@@ -215,7 +238,7 @@ def main_page(request):
                     for j, k in data_metGen[3].items():
                         v.append(k)
                     i=1
-                    table = 'A'+str(i)+':'+'J'+str(i+len(v))
+                    table = 'A'+str(i)+':'+'R'+str(i+len(v))
                     sheet7.add_table(table, {'data': v,
                                 'columns': [{'header': 'Chromosome'},
                                             {'header': 'Met. type'},
@@ -227,6 +250,14 @@ def main_page(request):
                                             {'header': 'End'},
                                             {'header': 'Gene strand'},
                                             {'header': 'Met. strand'},
+                                            {'header': 'Accession number'},
+                                            {'header': 'Score'},
+                                            {'header': 'Coverage'},
+                                            {'header': 'IPDRatio'},
+                                            {'header': 'Frac.'},
+                                            {'header': 'Frac. low'},
+                                            {'header': 'Frac. up'},
+                                            {'header': 'IdentificationQv'},
                                             ]})
                     sheet7.autofit()
 
