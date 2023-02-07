@@ -171,12 +171,12 @@ def met_pat_opt(gff, index_complete):
                     t_met = met[pos_neg][0]
                     aux = aux+"M"
                     sc_neg = met[pos_neg][1]
-                    cov_neg = met[pos_posit][2]
-                    ipd_neg = met[pos_posit][3]
-                    frac_neg = met[pos_posit][4]
-                    frac_low_neg = met[pos_posit][5]
-                    frac_up_neg = met[pos_posit][6]
-                    idqv_neg = met[pos_posit][7]
+                    cov_neg = met[pos_neg][2]
+                    ipd_neg = met[pos_neg][3]
+                    frac_neg = met[pos_neg][4]
+                    frac_low_neg = met[pos_neg][5]
+                    frac_up_neg = met[pos_neg][6]
+                    idqv_neg = met[pos_neg][7]
                 elif int(i[4][1])==0:
                     if t_met=="None":
                         t_met = "None"
@@ -227,12 +227,12 @@ def met_pat_opt(gff, index_complete):
                     t_met = met[pos_neg][0]
                     aux = aux+"M"
                     sc_neg = met[pos_neg][1]
-                    cov_neg = met[pos_posit][2]
-                    ipd_neg = met[pos_posit][3]
-                    frac_neg = met[pos_posit][4]
-                    frac_low_neg = met[pos_posit][5]
-                    frac_up_neg = met[pos_posit][6]
-                    idqv_neg = met[pos_posit][7]
+                    cov_neg = met[pos_neg][2]
+                    ipd_neg = met[pos_neg][3]
+                    frac_neg = met[pos_neg][4]
+                    frac_low_neg = met[pos_neg][5]
+                    frac_up_neg = met[pos_neg][6]
+                    idqv_neg = met[pos_neg][7]
                 else:
                     t_met = "None"
                     aux = aux+"N"
