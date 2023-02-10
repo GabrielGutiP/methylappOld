@@ -254,9 +254,13 @@ def met_pat_opt(gff, index_complete):
             result.append([i[0], i[1], s+1, pos_posit, pos_neg, aux, t_met, sc_pos, cov_pos, ipd_pos,
                             frac_pos, frac_low_pos, frac_up_pos, idqv_pos, sc_neg, cov_neg, ipd_neg,
                             frac_neg, frac_low_neg, frac_up_neg, idqv_neg])    # Cromosoma|Patron completo|Inicio de patrón|Posible + met|Posible - met|Estado|Tipo met|Score
-            
-        num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2), 
+        if i[3]!=0:
+            num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], round(100*(int(c_MM)/int(i[3])), 2), round(100*(int(c_MN)/int(i[3])), 2), round(100*(int(c_NM)/int(i[3])), 2), 
             round(100*(int(c_NN)/int(i[3])), 2), i[1]])
+        elif i[3]==0 and c_MM==0 and c_MN==0 and c_NM==0 and c_NN==0:
+            num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], int(i[3]), int(i[3]), int(i[3]), int(i[3]), i[1]])
+        else:
+            num_st.append([i[0], c_MM, c_MN, c_NM, c_NN, i[3], "Error", "Error", "Error", "Error", i[1]])
     return result, num_st
 
 def met_in_genes(gff, gene):
