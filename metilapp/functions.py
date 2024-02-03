@@ -72,8 +72,12 @@ def read_gene_gff(f_name, prom):
                             aux_r.append(r.split("=")[1].split("-")[1])
                         elif r.startswith('Parent'):
                             aux_r.append(r.replace("Parent=gene-", ""))
-                        elif r.startswith('product'):
+                        elif r.startswith('product') or r.startswith('Note'):
                             aux_r.append(r.split("=")[1])
+                    # Si los datos son menos de 3 en la descripcion se añade todo la columna de descripcion
+                    if len(aux_r)<3:
+                        aux_r.append(row[8])
+                        
                     if row[6]=="+":
                         aux = [row[0], row[2], [int(row[3]), int(row[4])], [int(row[3])-1-int(prom), int(row[3])-1], row[6], aux_r]  # Cromosoma, gen, rango gen, rango promotor, cadena y descripcion
                     else:
